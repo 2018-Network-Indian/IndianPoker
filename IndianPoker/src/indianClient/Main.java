@@ -8,6 +8,7 @@ public class Main {
 		
 			LoginFrame test = new LoginFrame(); 
 			//GreenRoom t = new GreenRoom();
+			// ±ê Å×½ºÆ®
 	} 
 
 }
