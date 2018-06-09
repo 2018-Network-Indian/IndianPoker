@@ -16,8 +16,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class Connect {
-	 final static String IP = "219.252.216.105";
-	//final static String IP = "127.0.0.1";
+	// final static String IP = "219.252.216.105";
+	final static String IP = "127.0.0.1";
 	final static int PORT = 9977;
 	static Socket socket;
 	static OutputStream out;
@@ -58,8 +58,9 @@ public class Connect {
 		Vector data = new Vector();
 
 		try {
+			
 			int count = din.readInt();
-			System.out.println(count);
+			System.out.println("##" + count);
 
 			for (int i = 0; i < count; i++) {
 				int id = din.readInt();
@@ -79,7 +80,13 @@ public class Connect {
 		}
 		return data;
 	}
-
+	
+	public static void reFresh() {
+		try {
+			dout.writeUTF("refresh");
+		}catch(IOException e) {}
+	}
+	
 	public static boolean roomCreate() {
 		String name = JOptionPane.showInputDialog("방이름을 입력하세요 : ");
 		System.out.println(name);
@@ -113,13 +120,7 @@ public class Connect {
 		return false;
 	}
 
-	public static void reFresh() {
-		try {
-			dout.writeUTF("refresh");
-		}catch(IOException e) {}
-	}
-	
-	public static boolean gameStart(GameTable game) {
+	public static boolean gameStart(GameTableFrame game) {
 		try {
 			Robot r = new Robot();
 			String wait = din.readUTF();
@@ -189,10 +190,6 @@ public class Connect {
 					System.out.println(betsignal);
 					if (betsignal.equals("Your turn")) {
 						game.setEnable();
-						if(game.getBetvalue() >= game.getMyGarnet()) {
-							game.betting.setEnabled(false);
-							game.repaint();
-						}
 						// 게임테이블에서 클릭 이벤트 발생 - 배팅 - 콜 - 다이
 						String sendop = "";
 						game.setMyop("");
@@ -241,9 +238,13 @@ public class Connect {
 				if (!game.getDie()) {
 					if (myCard > otherCard) {
 						game.changeMsg("승리!");
+						r.delay(1500);
+						game.setEnable();
 						JOptionPane.showMessageDialog(null, "이겼습니다!");
 					} else if (otherCard > myCard) {
 						game.changeMsg("패배!");
+						r.delay(1500);
+						game.setDisable();
 						JOptionPane.showMessageDialog(null, "졌습니다.");
 					} else {
 						game.changeMsg("무승부!");
@@ -251,8 +252,10 @@ public class Connect {
 					}
 				}
 				else {
-					game.changeMsg("다이!");
-					JOptionPane.showMessageDialog(null, "졌습니다.");				
+					game.changeMsg("포기!");
+					r.delay(1500);
+					game.setDisable();
+					JOptionPane.showMessageDialog(null, "포기했습니다.");				
 				}
 
 				r.delay(2000);
@@ -263,11 +266,9 @@ public class Connect {
 				// 게임종료
 				endsignal = din.readUTF();
 			}
-			game.changeMsg("게임이 종료되었습니다. 로비로 나가집니다.");
-			r.delay(3000);
+			game.changeMsg("게임이 종료되었습니다.");
 			System.out.println("게임 끝");
 		} catch (Exception e) {
-			return false;
 		}
 		return false;
 	}

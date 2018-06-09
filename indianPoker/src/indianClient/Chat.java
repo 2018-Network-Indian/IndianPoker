@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Chat implements Runnable {
-	private GameTable control;
+	private GameTableFrame control;
 	private final String IP = "219.252.216.105";
 	//private final String IP = "127.0.0.1";
 	private final int CPORT = 9976;
@@ -22,7 +22,7 @@ public class Chat implements Runnable {
 	private DataInputStream din;
 	private Robot r;
 	
-	public Chat(GameTable table) {
+	public Chat(GameTableFrame table) {
 		control = table;
 		try {
 			csock = new Socket(IP, CPORT);

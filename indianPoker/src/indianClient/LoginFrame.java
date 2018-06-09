@@ -124,7 +124,7 @@ public class LoginFrame extends JFrame{
 				clip.close();
 				layeredPane.removeAll();
 				dispose();
-				GreenRoom go = new GreenRoom();
+				GreenRoomFrame go = new GreenRoomFrame();
 			}else {
 				JOptionPane.showMessageDialog(null, "아이디 혹은 패스워드를 잘못 입력하셨습니다.");
 				id.setText("");
