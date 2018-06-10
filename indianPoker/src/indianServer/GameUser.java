@@ -39,16 +39,16 @@ public class GameUser {
 			Robot r = new Robot();
 			while(myRoom.getCurrentUser() < 2) {
 				r.delay(delayTime);
+				System.out.println("대기중 " + myRoom + " ' " + myRoom.getName());
 				acc.sendMsg("wait");
 			}
 			acc.sendMsg("Game Start");
 			GameProc go = new GameProc(this);
+			
+			System.out.println(myId + "끝났어");
 		} catch (AWTException e1) {	
 			return;
 		} catch(NullPointerException e) {
-			//e.getCause();
-			acc.sendMsg("Game Start");
-			GameProc go = new GameProc(this);		
 		}
 		
 	}

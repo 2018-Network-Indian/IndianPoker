@@ -16,8 +16,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class Connect {
-	// final static String IP = "219.252.216.105";
-	final static String IP = "127.0.0.1";
+	final static String IP = "219.252.216.105";
+	//final static String IP = "127.0.0.1";
 	final static int PORT = 9977;
 	static Socket socket;
 	static OutputStream out;
@@ -60,7 +60,7 @@ public class Connect {
 		try {
 			
 			int count = din.readInt();
-			System.out.println("##" + count);
+			System.out.println("갯수" + count);
 
 			for (int i = 0; i < count; i++) {
 				int id = din.readInt();
@@ -134,7 +134,7 @@ public class Connect {
 			
 			String gameInfo = din.readUTF();
 			game.getUserName(gameInfo);
-			System.out.println(gameInfo);
+			System.out.println("gameinfo : " + gameInfo);
 			r.delay(2500);
 
 			game.changeMsg("선을 결정합니다.");

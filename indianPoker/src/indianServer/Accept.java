@@ -78,6 +78,7 @@ public class Accept implements Runnable{
 		try {
 			//规 涝厘 or 规 积己 涝仿 
 			while(user.getSocket() != null) {
+				System.out.println("规夸没 : " + user.getId() + " " + user.getRoom());
 				sendRoomInfo();
 				
 				String getCode = din.readUTF();

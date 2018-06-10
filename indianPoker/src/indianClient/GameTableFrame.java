@@ -60,7 +60,7 @@ public class GameTableFrame extends JFrame implements Runnable {
 		this.setSize(1200, 700);
 		this.setResizable(false);
 		this.setLayout(null);
-		this.setUndecorated(true);
+		//this.setUndecorated(true);
 		
 		card = new ImageIcon[10]; //1~10번 카드 이미지 미리로딩
 		for(int i = 1; i <= 10; i ++) {
@@ -411,6 +411,7 @@ public class GameTableFrame extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		Connect.gameStart(this);
+		System.out.println("게임이 끝났어용");
 		dispose();
 		GreenRoomFrame gameEnd = new GreenRoomFrame();
 	}

@@ -22,6 +22,8 @@ public class GameProc implements Runnable {
 
 	GameProc(GameUser user) {
 		procRoom = user.getRoom();
+		procRoom.setStatus(false);
+		System.out.println(procRoom.getName() + " " + procRoom.getOwner() + " " + procRoom.getOther());
 		if (user.equals(procRoom.getOwner())) {
 			whoami = true;
 			p1 = user;
@@ -30,8 +32,7 @@ public class GameProc implements Runnable {
 			whoami = false;
 			p1 = procRoom.getOwner();
 			p2 = user;
-		}
-		procRoom.setStatus(false);
+		}	
 		this.run();
 		
 	}
@@ -56,10 +57,8 @@ public class GameProc implements Runnable {
 				dout2.writeUTF(info);
 				System.out.println("채팅이 시작됩니다");
 				boolean isEnd = false;
-				int cPort = 9976;
-				ServerSocket chattingSocket = new ServerSocket(cPort);
-				Socket p1 = chattingSocket.accept();
-				Socket p2 = chattingSocket.accept();
+				Socket p1 = Main.chattingSocket.accept();
+				Socket p2 = Main.chattingSocket.accept();
 				
 				DataOutputStream outp1 = new DataOutputStream(p1.getOutputStream());
 				DataInputStream inp1 = new DataInputStream(p1.getInputStream());
@@ -94,6 +93,8 @@ public class GameProc implements Runnable {
 				
 				outp1.writeUTF("END");
 				outp2.writeUTF("END");
+				System.out.println("끝났어");
+				
 			} else {//게임용~				
 				dout.writeUTF(info);
 				System.out.println("게임이 시작됩니다");
@@ -207,9 +208,10 @@ public class GameProc implements Runnable {
 			procRoom.close();
 			RoomManager.deleteRoom(procRoom);
 		} catch (IOException e) {
-			p1.detachRoom(procRoom);
-			p2.detachRoom(procRoom);
-			return;
+			e.printStackTrace();
+			//p1.detachRoom(procRoom);
+			//p2.detachRoom(procRoom);
+			//return;
 		}
 	}
 	
