@@ -11,8 +11,8 @@ public class GameUser {
 	private String myGameName;
 	private int myGarnet, myCard;
 	private boolean myTurn, die;
-
-	public GameUser() {}
+	private int port;
+	//public GameUser() {}
 	public GameUser(String id, Socket sock) {
 		myId = id;
 		mySocket = sock;
@@ -32,25 +32,38 @@ public class GameUser {
 		myRoom = null;
 		myGameName = null;
 	}
-	
+	public void setmyRoom(GameRoom room) {
+		this.myRoom = room;
+	}
+
 	public void waitGame(Accept acc) {
 		int delayTime = 4000;
+
+		Robot r = null;
 		try {
-			Robot r = new Robot();
-			while(myRoom.getCurrentUser() < 2) {
-				r.delay(delayTime);
-				acc.sendMsg("wait");
-			}
-			acc.sendMsg("Game Start");
-			GameProc go = new GameProc(this);
-		} catch (AWTException e1) {	
-			return;
-		} catch(NullPointerException e) {
-			//e.getCause();
-			acc.sendMsg("Game Start");
-			GameProc go = new GameProc(this);		
+			r = new Robot();
+		} catch (AWTException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		
+
+		myRoom = acc.getMyRoom();
+
+		while (myRoom.getCurrentUser() < 2) {
+			r.delay(delayTime);
+			acc.sendMsg("wait");
+		}
+		try {		
+			acc.sendMsg("Game Start~");
+			GameProc go = new GameProc(this);
+		} catch (NullPointerException e) {
+			// e.getCause();
+			// System.out.println("¿©±â·Î;;");
+			acc.sendMsg("Game Start");
+			this.setmyRoom(myRoom);
+			GameProc go = new GameProc(this);
+		}
+
 	}
 	
 	public GameRoom getRoom() {
@@ -112,7 +125,12 @@ public class GameUser {
 	public boolean getDie() {
 		return die;
 	}
-	
+	public void setPort(int port) {
+		this.port = port;
+	}
+	public int getPort() {
+		return port;
+	}
 	@Override
 	public String toString() {
 		return "ID : " + myId ;

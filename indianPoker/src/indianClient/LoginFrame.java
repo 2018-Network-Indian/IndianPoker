@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
@@ -38,11 +40,11 @@ public class LoginFrame extends JFrame{
 	private Clip clip;
 	
 	public LoginFrame()  {
-		super("Login");
+		super("Login");		
 		bgm = new File("rsc/title.wav");
 		try {
 		clip = AudioSystem.getClip();
-		clip.open(AudioSystem.getAudioInputStream(bgm));
+		//clip.open(AudioSystem.getAudioInputStream(bgm));
 		clip.start();
 		clip.loop(3);
 		}catch (Exception e) {}
@@ -57,14 +59,16 @@ public class LoginFrame extends JFrame{
 		this.setResizable(false);
 		this.setTitle("Login");
 		this.setLayout(null);
-		this.setUndecorated(true);
+		//this.setUndecorated(true);
 		
 		layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0,0,1200,700);
 		layeredPane.setLayout(null);
 		//background img
-		try {
-			img = ImageIO.read(new File("rsc/title2.png"));
+		try {			
+			URL url = getClass().getClassLoader().getResource("title2.png");
+			
+			img = ImageIO.read(url);
 		} catch (IOException e) {
 		}
 		BackImg backimg = new BackImg();
@@ -110,7 +114,7 @@ public class LoginFrame extends JFrame{
 		String sendpwd = pwd.getText();
 		
 		if(sendid.equals("")|| sendpwd.equals("")) return false;
-		
+		System.out.println("!!!!!!" + sendid);
 		Connect.serverConn(sendid, sendpwd);
 		if(Connect.getFlag() == true) return true;
 		else return false;
@@ -124,7 +128,7 @@ public class LoginFrame extends JFrame{
 				clip.close();
 				layeredPane.removeAll();
 				dispose();
-				GreenRoom go = new GreenRoom();
+				GreenRoomFrame go = new GreenRoomFrame();
 			}else {
 				JOptionPane.showMessageDialog(null, "아이디 혹은 패스워드를 잘못 입력하셨습니다.");
 				id.setText("");

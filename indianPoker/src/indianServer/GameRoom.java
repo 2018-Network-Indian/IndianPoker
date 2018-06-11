@@ -15,7 +15,10 @@ public class GameRoom implements Serializable{
 	private int betting, betSum;
 	private boolean status;
 	
-	public GameRoom() {}
+	public GameRoom() { }
+	public GameRoom(int id) {
+		this.id = id;
+	}
 	
 	public GameRoom(int id, GameUser user, String name) {
 		this.id = id;

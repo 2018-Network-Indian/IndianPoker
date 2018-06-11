@@ -9,10 +9,12 @@ public class RoomManager {
 	private static AtomicInteger atom = new AtomicInteger(); //임계영역 기능을 해준다고 보면됨
 	
 	public static GameRoom createRoom() {//test용
-		int roomId = atom.incrementAndGet();
-		GameRoom room = new GameRoom();
-		roomList.add(room);
-		return room;
+		int roomId = atom.incrementAndGet();		
+		
+			GameRoom room = new GameRoom();
+			roomList.add(room);
+			return room;	
+		
 	}
 	
 	public static GameRoom createRoom(GameUser owner) {

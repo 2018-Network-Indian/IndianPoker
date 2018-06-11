@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.MalformedInputException;
+import java.util.Random;
 
 public class GameProc implements Runnable {
 	private GameRoom procRoom;
@@ -19,22 +21,25 @@ public class GameProc implements Runnable {
 	private DataInputStream din, din2;
 	private Socket sock, sock2;
 	private boolean whoami = false;// 방장구분
-
+	
 	GameProc(GameUser user) {
 		procRoom = user.getRoom();
+		Random random = new Random();		
+				
 		if (user.equals(procRoom.getOwner())) {
 			whoami = true;
 			p1 = user;
-			p2 = procRoom.getOther();
+			p2 = procRoom.getOther();			
 		} else {
 			whoami = false;
 			p1 = procRoom.getOwner();
-			p2 = user;
+			p2 = user;					
 		}
 		procRoom.setStatus(false);
-		this.run();
 		
-	}
+		this.run();
+
+	}	
 
 	@Override
 	public void run() {
@@ -50,14 +55,31 @@ public class GameProc implements Runnable {
 			dout = new DataOutputStream(out);
 			dout2 = new DataOutputStream(out2);
 			
+			
+			/*	String chport =  String.valueOf(cPort);
+			dout.writeUTF("wait");
+			try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
+		/*	dout.flush();
+			dout2.flush();
+			dout.writeInt(cPort);
+			dout2.writeInt(cPort);*/
 			String info = whoami + procRoom.toString();
 			System.out.println("게임이 시작되었습니다 " + info);
+			//System.out.println("Port # : " + chport);
+			
+			
 			if (!whoami) {//2개 쓰레드니까 하나는 채팅용 하나는 게임용으로 하면 될듯!
 				dout2.writeUTF(info);
-				System.out.println("채팅이 시작됩니다");
+				//System.out.println("채팅이 시작됩니다: " + cPort);
+				
 				boolean isEnd = false;
-				int cPort = 9976;
-				ServerSocket chattingSocket = new ServerSocket(cPort);
+				
+				ServerSocket chattingSocket = ServerMain.chattingSocket;
 				Socket p1 = chattingSocket.accept();
 				Socket p2 = chattingSocket.accept();
 				
@@ -90,6 +112,12 @@ public class GameProc implements Runnable {
 					}
 					
 					isEnd = procRoom.getSatus();
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} while (!isEnd);
 				
 				outp1.writeUTF("END");
@@ -207,9 +235,10 @@ public class GameProc implements Runnable {
 			procRoom.close();
 			RoomManager.deleteRoom(procRoom);
 		} catch (IOException e) {
-			p1.detachRoom(procRoom);
-			p2.detachRoom(procRoom);
-			return;
+			//p1.detachRoom(procRoom);
+			//p2.detachRoom(procRoom);
+			//return;
+			e.printStackTrace();
 		}
 	}
 	
