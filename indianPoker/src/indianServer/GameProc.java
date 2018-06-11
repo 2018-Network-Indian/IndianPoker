@@ -50,13 +50,14 @@ public class GameProc implements Runnable {
 			din2 = new DataInputStream(in2);
 			dout = new DataOutputStream(out);
 			dout2 = new DataOutputStream(out2);
-			
+						
 			String info = whoami + procRoom.toString();
 			System.out.println("게임이 시작되었습니다 " + info);
 			if (!whoami) {//2개 쓰레드니까 하나는 채팅용 하나는 게임용으로 하면 될듯!
 				dout2.writeUTF(info);
 				System.out.println("채팅이 시작됩니다");
 				boolean isEnd = false;
+
 				Socket p1 = Main.chattingSocket.accept();
 				Socket p2 = Main.chattingSocket.accept();
 				

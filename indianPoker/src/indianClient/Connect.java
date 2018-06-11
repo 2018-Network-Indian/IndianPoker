@@ -129,9 +129,10 @@ public class Connect {
 				wait = din.readUTF();
 				System.out.println(wait);
 			}
-			game.changeMsg("게임을 시작합니다.");
-			new Thread(new Chat(game)).start();
 			
+			game.changeMsg("게임을 시작합니다.");
+			new Thread(new Chat(game)).start();	
+		
 			String gameInfo = din.readUTF();
 			game.getUserName(gameInfo);
 			System.out.println("gameinfo : " + gameInfo);
