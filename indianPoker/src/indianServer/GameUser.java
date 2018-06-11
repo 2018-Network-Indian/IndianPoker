@@ -44,8 +44,7 @@ public class GameUser {
 			}
 			acc.sendMsg("Game Start");
 			GameProc go = new GameProc(this);
-			
-			System.out.println(myId + "³¡³µ¾î");
+		
 		} catch (AWTException e1) {	
 			return;
 		} catch(NullPointerException e) {

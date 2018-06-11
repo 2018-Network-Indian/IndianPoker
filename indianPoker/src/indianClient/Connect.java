@@ -176,6 +176,10 @@ public class Connect {
 			while (!endsignal.equals("Game Over")) {
 				System.out.println(endsignal);
 				game.initCardView();
+				
+				int myGarnet = din.readInt();
+				game.updateMyGarnet(myGarnet);
+
 				int otherGarnet = din.readInt(); // 상대 가넷 업데이트
 				game.updateGarnet(otherGarnet);
 				game.updateBetSum(din.readInt());
@@ -260,10 +264,7 @@ public class Connect {
 				}
 
 				r.delay(2000);
-				int myGarnet = din.readInt();
-				game.updateMyGarnet(myGarnet);
-				// 상대가넷은 맨위에서 업데이트됨
-
+				
 				// 게임종료
 				endsignal = din.readUTF();
 			}

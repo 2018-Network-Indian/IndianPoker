@@ -117,11 +117,20 @@ public class GameProc implements Runnable {
 						+ p2.getMyCard());
 				// 게임
 				int gamecount = 0;
-				while (p1.getGarnet() > 0 && p2.getGarnet() > 0) {
+				while (p1.getGarnet() > 0 && p2.getGarnet() > 0 || 	p1.getMyCard() == p2.getMyCard()) {
 					gamecount++;
 					p1.setDie(false); p2.setDie(false);
 					dout.writeUTF("continue");
 					dout2.writeUTF("continue");
+					
+					if(p1.getGarnet() > 0  && p2.getGarnet() > 0) {
+						procRoom.setPanDon(2);
+						p1.decGarnet(1);
+						p2.decGarnet(1);
+					}
+					
+					dout.writeInt(p1.getGarnet());
+					dout2.writeInt(p2.getGarnet());	
 					
 					dout.writeInt(p2.getGarnet());
 					dout2.writeInt(p1.getGarnet());
@@ -195,8 +204,7 @@ public class GameProc implements Runnable {
 					}
 					
 					procRoom.initBetting();// 배팅 초기화
-					dout.writeInt(p1.getGarnet());
-					dout2.writeInt(p2.getGarnet());						
+										
 				}
 							
 				procRoom.setStatus(true);
