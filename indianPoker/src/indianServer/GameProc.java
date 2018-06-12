@@ -117,7 +117,7 @@ public class GameProc implements Runnable {
 						+ p2.getMyCard());
 				// 게임
 				int gamecount = 0;
-				while (p1.getGarnet() > 0 && p2.getGarnet() > 0 || 	p1.getMyCard() == p2.getMyCard()) {
+				while (p1.getGarnet() > 0 && p2.getGarnet() > 0 || p1.getMyCard() == p2.getMyCard()) {
 					gamecount++;
 					p1.setDie(false); p2.setDie(false);
 					dout.writeUTF("continue");
@@ -140,7 +140,7 @@ public class GameProc implements Runnable {
 					dout2.writeInt(procRoom.getBetSum());
 					dout2.writeInt(procRoom.getBetting());
 					
-					if (gamecount == 10) {
+					if (gamecount > 10) {
 						procRoom.initDeck(); // 10회마다 덱을 변경해야한다.
 						gamecount = 0;
 					}

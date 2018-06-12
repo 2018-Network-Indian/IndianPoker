@@ -270,7 +270,7 @@ public class GameTableFrame extends JFrame implements Runnable {
 
 	public synchronized void setEnable() {
 		betting.setEnabled(true);
-		if(betvalue != 0) call.setEnabled(true);
+		if(betvalue != 0 || myGarnet < 1) call.setEnabled(true);
 		else call.setEnabled(false);
 		die.setEnabled(true);
 		msg.setText("내 차례입니다.");

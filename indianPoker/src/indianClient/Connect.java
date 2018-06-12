@@ -215,8 +215,7 @@ public class Connect {
 							game.updateBetSum(din.readInt());
 							game.updateMyGarnet(din.readInt());
 						} else if (sendop.equals("die")) {// 무조건 패배
-							game.setDie(true);
-						}
+							game.setDie(true); 						}
 						System.out.println("보냄" + sendop);
 					} else if (betsignal.equals("Wait turn")) {
 						game.setDisable();
@@ -235,6 +234,7 @@ public class Connect {
 					betsignal = din.readUTF();
 				} while (!betsignal.equals("Betting end"));
 				// 결과 처리
+				game.changeMsg("결과를 확인합니다.");
 				r.delay(2000);
 				int myCard = din.readInt();
 				game.setMyCard(myCard); // 내카드를 받아서 보여줌
