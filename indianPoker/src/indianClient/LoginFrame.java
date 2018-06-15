@@ -116,7 +116,6 @@ public class LoginFrame extends JFrame{
 		else return false;
 	}
 	
-	
 	private class ClickListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
