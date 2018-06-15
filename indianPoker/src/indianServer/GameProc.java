@@ -94,7 +94,7 @@ public class GameProc implements Runnable {
 				
 				outp1.writeUTF("END");
 				outp2.writeUTF("END");
-				System.out.println("끝났어");
+				//System.out.println("끝났어");
 				
 			} else {//게임용~				
 				dout.writeUTF(info);
@@ -172,6 +172,13 @@ public class GameProc implements Runnable {
 					dout.writeUTF("Betting end");
 					dout2.writeUTF("Betting end");
 
+					//상대방 다이 여부전송 
+					String p1b = String.valueOf(p1.getDie());
+					String p2b = String.valueOf(p2.getDie());
+					
+					dout.writeUTF(p2b);
+					dout2.writeUTF(p1b);
+					
 					// 결과확인
 					dout.writeInt(p1.getMyCard());// 내카드 정보를 주고
 					dout2.writeInt(p2.getMyCard());

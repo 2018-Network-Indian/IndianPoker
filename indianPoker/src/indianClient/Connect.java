@@ -236,11 +236,13 @@ public class Connect {
 				// 결과 처리
 				game.changeMsg("결과를 확인합니다.");
 				r.delay(2000);
+				String otherDie = din.readUTF(); //상대방 다이여뷰ㅜ 
+				
 				int myCard = din.readInt();
 				game.setMyCard(myCard); // 내카드를 받아서 보여줌
 				System.out.println(myCard + " ' " + otherCard + " . " + game.isOwner());
 
-				if (!game.getDie()) {
+				if (!game.getDie() && otherDie.equals("false")) {
 					if (myCard > otherCard) {
 						game.changeMsg("승리!");
 						r.delay(1500);
@@ -253,8 +255,13 @@ public class Connect {
 						JOptionPane.showMessageDialog(null, "졌습니다.");
 					} else {
 						game.changeMsg("무승부!");
+						r.delay(1500);
 						JOptionPane.showMessageDialog(null, "비겼습니다.");
 					}
+				}
+				else if(otherDie.equals("true")) {
+					game.changeMsg("승리!");
+					JOptionPane.showMessageDialog(null, "상대방이 포기했습니다.");
 				}
 				else {
 					game.changeMsg("포기!");
