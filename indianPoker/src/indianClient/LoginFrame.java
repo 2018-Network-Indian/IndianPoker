@@ -108,7 +108,7 @@ public class LoginFrame extends JFrame{
 	public boolean procLogin() {
 		String sendid = id.getText();
 		String sendpwd = pwd.getText();
-		
+		 
 		if(sendid.equals("")|| sendpwd.equals("")) return false;
 		
 		Connect.serverConn(sendid, sendpwd);
