@@ -216,7 +216,8 @@ public class Connect {
 							game.updateBetSum(din.readInt());
 							game.updateMyGarnet(din.readInt());
 						} else if (sendop.equals("die")) {// 무조건 패배
-							game.setDie(true); 						}
+							game.setDie(true); 						
+						}
 						System.out.println("보냄" + sendop);
 					} else if (betsignal.equals("Wait turn")) {
 						game.setDisable();
