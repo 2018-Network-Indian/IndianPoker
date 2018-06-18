@@ -101,6 +101,7 @@ public class Accept implements Runnable{
 							dout.writeUTF("RJS");
 							//霸烙 郴何 贸府;;
 							user.waitGame(this);
+
 						}
 						else {
 							System.out.println("规俊 立加窍瘤 给窃");

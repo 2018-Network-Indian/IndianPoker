@@ -79,6 +79,7 @@ public class GreenRoomFrame extends JFrame{
 		col.add("방 이름");
 		col.add("방장 ");
 		col.add("인원 ");
+		//col.add("방 상태");
 		
 		DefaultTableModel model = new DefaultTableModel(data,col) {
 			public boolean isCellEditable(int row, int column) {

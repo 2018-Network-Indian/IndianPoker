@@ -56,7 +56,7 @@ public class Connect {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Vector getRoomList() {
 		Vector data = new Vector();
-
+		//String start = "대기중";
 		try {
 			
 			int count = din.readInt();
@@ -72,6 +72,8 @@ public class Connect {
 				row.add(roomName);
 				row.add(owner);
 				row.add(num);
+				//if(num > 1) start = "게임중";
+				//row.add(start);
 				data.add(row);
 				System.out.println(id + " " + roomName + " " + owner + " " + num);
 			}
@@ -116,7 +118,6 @@ public class Connect {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return false;
 	}
 
@@ -236,8 +237,7 @@ public class Connect {
 				// 결과 처리
 				game.changeMsg("결과를 확인합니다.");
 				r.delay(2000);
-				String otherDie = din.readUTF(); //상대방 다이여뷰ㅜ 
-				
+				String otherDie = din.readUTF(); //상대방 다이확인 				
 				int myCard = din.readInt();
 				game.setMyCard(myCard); // 내카드를 받아서 보여줌
 				System.out.println(myCard + " ' " + otherCard + " . " + game.isOwner());
@@ -261,6 +261,7 @@ public class Connect {
 				}
 				else if(otherDie.equals("true")) {
 					game.changeMsg("승리!");
+					r.delay(1500);
 					JOptionPane.showMessageDialog(null, "상대방이 포기했습니다.");
 				}
 				else {
