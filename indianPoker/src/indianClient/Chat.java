@@ -14,9 +14,9 @@ import indianServer.GameUser;
 
 public class Chat implements Runnable {
 	private GameTableFrame control;
-	//private final String IP = "219.252.216.105";
-	private final String IP = "127.0.0.1";
-	private int CPORT = 9976;
+	private final String IP = "114.70.235.168";
+	//private final String IP = "127.0.0.1";
+	private int CPORT = 9978;
 	private Socket csock;
 	private OutputStream out;
 	private DataOutputStream dout;
@@ -60,7 +60,7 @@ public class Chat implements Runnable {
 					control.addChatting(recv);
 					din.readUTF();
 				}	
-				r.delay(500);
+				r.delay(50);
 			}
 		}catch(IOException e) {return;} catch (AWTException e) {return;}
 	}

@@ -124,6 +124,10 @@ public class GameRoom implements Serializable{
 		betSum = 0;
 	}
 	
+	public void setPanDon(int n) {
+		betSum = n;
+	}
+	
 	public void setBetting(int bet) {
 		betting = bet;
 		betSum += bet;

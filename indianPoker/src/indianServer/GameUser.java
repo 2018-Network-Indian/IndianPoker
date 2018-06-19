@@ -32,38 +32,24 @@ public class GameUser {
 		myRoom = null;
 		myGameName = null;
 	}
-	public void setmyRoom(GameRoom room) {
-		this.myRoom = room;
-	}
-
+	
 	public void waitGame(Accept acc) {
 		int delayTime = 4000;
-
-		Robot r = null;
 		try {
-			r = new Robot();
-		} catch (AWTException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
-		myRoom = acc.getMyRoom();
-
-		while (myRoom.getCurrentUser() < 2) {
-			r.delay(delayTime);
-			acc.sendMsg("wait");
-		}
-		try {		
-			acc.sendMsg("Game Start~");
-			GameProc go = new GameProc(this);
-		} catch (NullPointerException e) {
-			// e.getCause();
-			// System.out.println("여기로;;");
+			Robot r = new Robot();
+			while(myRoom.getCurrentUser() < 2) {
+				r.delay(delayTime);
+				System.out.println("대기중 " + myRoom + " ' " + myRoom.getName());
+				acc.sendMsg("wait");
+			}
 			acc.sendMsg("Game Start");
-			this.setmyRoom(myRoom);
 			GameProc go = new GameProc(this);
+		
+		} catch (AWTException e1) {	
+			return;
+		} catch(NullPointerException e) {
 		}
-
+		
 	}
 	
 	public GameRoom getRoom() {
@@ -125,12 +111,7 @@ public class GameUser {
 	public boolean getDie() {
 		return die;
 	}
-	public void setPort(int port) {
-		this.port = port;
-	}
-	public int getPort() {
-		return port;
-	}
+	
 	@Override
 	public String toString() {
 		return "ID : " + myId ;

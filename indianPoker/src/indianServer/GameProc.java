@@ -24,8 +24,8 @@ public class GameProc implements Runnable {
 	
 	GameProc(GameUser user) {
 		procRoom = user.getRoom();
-		Random random = new Random();		
-				
+		procRoom.setStatus(false);
+		System.out.println(procRoom.getName() + " " + procRoom.getOwner() + " " + procRoom.getOther());
 		if (user.equals(procRoom.getOwner())) {
 			whoami = true;
 			p1 = user;
@@ -33,9 +33,9 @@ public class GameProc implements Runnable {
 		} else {
 			whoami = false;
 			p1 = procRoom.getOwner();
-			p2 = user;					
-		}
-		procRoom.setStatus(false);
+			p2 = user;
+		}	
+		this.run();
 		
 		this.run();
 
@@ -53,25 +53,11 @@ public class GameProc implements Runnable {
 			din = new DataInputStream(in);
 			din2 = new DataInputStream(in2);
 			dout = new DataOutputStream(out);
-			dout2 = new DataOutputStream(out2);
+			dout2 = new DataOutputStream(out2);			
 			
-			
-			/*	String chport =  String.valueOf(cPort);
-			dout.writeUTF("wait");
-			try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
-		/*	dout.flush();
-			dout2.flush();
-			dout.writeInt(cPort);
-			dout2.writeInt(cPort);*/
 			String info = whoami + procRoom.toString();
 			System.out.println("게임이 시작되었습니다 " + info);
-			//System.out.println("Port # : " + chport);
-			
+					
 			
 			if (!whoami) {//2개 쓰레드니까 하나는 채팅용 하나는 게임용으로 하면 될듯!
 				dout2.writeUTF(info);
@@ -113,7 +99,7 @@ public class GameProc implements Runnable {
 					
 					isEnd = procRoom.getSatus();
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(3000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

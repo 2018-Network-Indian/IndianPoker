@@ -16,8 +16,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class Connect {
-	// final static String IP = "219.252.216.105";
-	final static String IP = "127.0.0.1";
+	private static String IP = "114.70.235.168";
+	//final static String IP = "127.0.0.1";
 	final static int PORT = 9977;
 	static Socket socket;
 	static OutputStream out;
@@ -92,7 +92,7 @@ public class Connect {
 	public static boolean roomCreate() {
 		String name = JOptionPane.showInputDialog("방이름을 입력하세요 : ");
 		System.out.println(name);
-		if (name == null)
+		if (name.equals(null))
 			return false;
 		String send = "RoomCreate";
 		try {
@@ -135,7 +135,7 @@ public class Connect {
 			
 					
 			game.changeMsg("게임을 시작합니다.");
-			new Thread(new Chat(game)).start();
+			new Thread(new Chat(game)).start();		
 			
 			String gameInfo = din.readUTF();
 			game.getUserName(gameInfo);

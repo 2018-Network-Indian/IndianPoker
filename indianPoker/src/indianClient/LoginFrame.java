@@ -64,11 +64,9 @@ public class LoginFrame extends JFrame{
 		layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0,0,1200,700);
 		layeredPane.setLayout(null);
-		//background img
-		try {			
-			URL url = getClass().getClassLoader().getResource("title2.png");
-			
-			img = ImageIO.read(url);
+		//background img		
+		try {
+			img = ImageIO.read(new File("rsc/title2.png"));
 		} catch (IOException e) {
 		}
 		BackImg backimg = new BackImg();
@@ -114,7 +112,7 @@ public class LoginFrame extends JFrame{
 		String sendpwd = pwd.getText();
 		
 		if(sendid.equals("")|| sendpwd.equals("")) return false;
-		System.out.println("!!!!!!" + sendid);
+		
 		Connect.serverConn(sendid, sendpwd);
 		if(Connect.getFlag() == true) return true;
 		else return false;

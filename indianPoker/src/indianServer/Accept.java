@@ -15,8 +15,8 @@ public class Accept implements Runnable{
 	private InputStream in;
 	private DataInputStream din;
 	private Socket clientSocket;
-	private GameUser user;
-	private GameRoom getRoom;
+	private GameUser user = null;
+	private GameRoom getRoom = null;
 	
 	public Accept(Socket sock) {//클라이언트 접속을 받음
 		clientSocket = sock;
@@ -88,9 +88,6 @@ public class Accept implements Runnable{
 					if(getRoom != null) {
 						dout.writeUTF("RCS"); 
 						//게임 내부처리
-						System.out.println("&&&&" + getRoom.getId());
-						
-						user.setmyRoom(getRoom);
 						user.waitGame(this);
 					}
 					else dout.writeUTF("Fail");
@@ -103,6 +100,7 @@ public class Accept implements Runnable{
 							dout.writeUTF("RJS");
 							//게임 내부 처리;;
 							user.waitGame(this);
+
 						}
 						else {
 							System.out.println("방에 접속하지 못함");

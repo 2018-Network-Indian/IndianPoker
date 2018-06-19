@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class ServerMain {
 	final static int PORT = 9977;
-	final static int cPort = 9976;
+	final static int cPort = 9978;
 	static ServerSocket chattingSocket;
 	
 	public static void main(String args[]

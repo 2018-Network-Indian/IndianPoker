@@ -57,7 +57,7 @@ public class GameTableFrame extends JFrame implements Runnable {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(screenSize.width/2 - this.getSize().width/2 - 550, screenSize.height/2 - 350 - this.getSize().height/2);
-		this.setSize(1200, 700);
+		this.setSize(1200, 750);
 		this.setResizable(false);
 		this.setLayout(null);
 		//this.setUndecorated(true);
@@ -276,6 +276,7 @@ public class GameTableFrame extends JFrame implements Runnable {
 		msg.setText("내 차례입니다.");
 		revalidate();
 		repaint();
+		
 	}
 
 	public synchronized void getUserName(String s) {
