@@ -108,7 +108,8 @@ public class GameTable extends JFrame implements Runnable {
 		});
 		lp.add(betting);
 		
-		call = new JButton("ÄÝ");
+		ImageIcon callButton = new ImageIcon("rsc/CallButton.jpg");
+		call = new JButton("ÄÝ", callButton);
 		call.setBounds(110, 620, 90, 60);
 		call.addActionListener(new ActionListener() {
 			@Override

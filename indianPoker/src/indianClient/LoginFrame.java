@@ -42,21 +42,22 @@ public class LoginFrame extends JFrame{
 		bgm = new File("rsc/title.wav");
 		try {
 		clip = AudioSystem.getClip();
-		clip.open(AudioSystem.getAudioInputStream(bgm));
+		//clip.open(AudioSystem.getAudioInputStream(bgm));
 		clip.start();
 		clip.loop(3);
 		}catch (Exception e) {}
 		showScreen();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void showScreen() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(screenSize.width/2 - this.getSize().width/2 - 550, screenSize.height/2 - 350 - this.getSize().height/2);
 		this.setSize(1200, 700);
 		this.setResizable(false);
 		this.setTitle("Login");
-		this.setLayout(null);
+		//this.setLayout(null);
 		this.setUndecorated(true);
 		
 		layeredPane = new JLayeredPane();
@@ -102,19 +103,21 @@ public class LoginFrame extends JFrame{
 		layeredPane.add(backimg);
 		this.add(layeredPane);
 		this.setVisible(true);
-	
+		
+		
 	}
 	
 	public boolean procLogin() {
 		String sendid = id.getText();
 		String sendpwd = pwd.getText();
-		 
+		
 		if(sendid.equals("")|| sendpwd.equals("")) return false;
 		
 		Connect.serverConn(sendid, sendpwd);
 		if(Connect.getFlag() == true) return true;
 		else return false;
 	}
+	
 	
 	private class ClickListener implements ActionListener{
 		@Override

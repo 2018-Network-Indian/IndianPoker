@@ -16,8 +16,8 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 public class Connect {
-	final static String IP = "219.252.216.105";
-	//final static String IP = "127.0.0.1";
+	// final static String IP = "219.252.216.105";
+	final static String IP = "127.0.0.1";
 	final static int PORT = 9977;
 	static Socket socket;
 	static OutputStream out;
@@ -56,11 +56,11 @@ public class Connect {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Vector getRoomList() {
 		Vector data = new Vector();
-		//String start = "대기중";
+
 		try {
 			
 			int count = din.readInt();
-			System.out.println("갯수" + count);
+			System.out.println("##" + count);
 
 			for (int i = 0; i < count; i++) {
 				int id = din.readInt();
@@ -72,8 +72,6 @@ public class Connect {
 				row.add(roomName);
 				row.add(owner);
 				row.add(num);
-				//if(num > 1) start = "게임중";
-				//row.add(start);
 				data.add(row);
 				System.out.println(id + " " + roomName + " " + owner + " " + num);
 			}
@@ -82,13 +80,19 @@ public class Connect {
 		}
 		return data;
 	}
-	
-	public static void reFresh() {
+	public static boolean refreshRoom() {
+		String send = "Refresh";
 		try {
-			dout.writeUTF("refresh");
-		}catch(IOException e) {}
+			dout.writeUTF(send);			
+			String retval = din.readUTF();
+			if (retval.equals("RFS"))
+				return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
-	
 	public static boolean roomCreate() {
 		String name = JOptionPane.showInputDialog("방이름을 입력하세요 : ");
 		System.out.println(name);
@@ -118,6 +122,7 @@ public class Connect {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return false;
 	}
 
@@ -130,13 +135,12 @@ public class Connect {
 				wait = din.readUTF();
 				System.out.println(wait);
 			}
-			
 			game.changeMsg("게임을 시작합니다.");
-			new Thread(new Chat(game)).start();	
-		
+			new Thread(new Chat(game)).start();
+			
 			String gameInfo = din.readUTF();
 			game.getUserName(gameInfo);
-			System.out.println("gameinfo : " + gameInfo);
+			System.out.println(gameInfo);
 			r.delay(2500);
 
 			game.changeMsg("선을 결정합니다.");
@@ -177,10 +181,6 @@ public class Connect {
 			while (!endsignal.equals("Game Over")) {
 				System.out.println(endsignal);
 				game.initCardView();
-				
-				int myGarnet = din.readInt();
-				game.updateMyGarnet(myGarnet);
-
 				int otherGarnet = din.readInt(); // 상대 가넷 업데이트
 				game.updateGarnet(otherGarnet);
 				game.updateBetSum(din.readInt());
@@ -216,7 +216,7 @@ public class Connect {
 							game.updateBetSum(din.readInt());
 							game.updateMyGarnet(din.readInt());
 						} else if (sendop.equals("die")) {// 무조건 패배
-							game.setDie(true); 						
+							game.setDie(true);
 						}
 						System.out.println("보냄" + sendop);
 					} else if (betsignal.equals("Wait turn")) {
@@ -236,14 +236,12 @@ public class Connect {
 					betsignal = din.readUTF();
 				} while (!betsignal.equals("Betting end"));
 				// 결과 처리
-				game.changeMsg("결과를 확인합니다.");
 				r.delay(2000);
-				String otherDie = din.readUTF(); //상대방 다이확인 				
 				int myCard = din.readInt();
 				game.setMyCard(myCard); // 내카드를 받아서 보여줌
 				System.out.println(myCard + " ' " + otherCard + " . " + game.isOwner());
 
-				if (!game.getDie() && otherDie.equals("false")) {
+				if (!game.getDie()) {
 					if (myCard > otherCard) {
 						game.changeMsg("승리!");
 						r.delay(1500);
@@ -256,14 +254,8 @@ public class Connect {
 						JOptionPane.showMessageDialog(null, "졌습니다.");
 					} else {
 						game.changeMsg("무승부!");
-						r.delay(1500);
 						JOptionPane.showMessageDialog(null, "비겼습니다.");
 					}
-				}
-				else if(otherDie.equals("true")) {
-					game.changeMsg("승리!");
-					r.delay(1500);
-					JOptionPane.showMessageDialog(null, "상대방이 포기했습니다.");
 				}
 				else {
 					game.changeMsg("포기!");
@@ -273,7 +265,10 @@ public class Connect {
 				}
 
 				r.delay(2000);
-				
+				int myGarnet = din.readInt();
+				game.updateMyGarnet(myGarnet);
+				// 상대가넷은 맨위에서 업데이트됨
+
 				// 게임종료
 				endsignal = din.readUTF();
 			}
