@@ -179,6 +179,7 @@ public class GameProc implements Runnable {
 					dout.writeUTF(p2b);
 					dout2.writeUTF(p1b);
 					
+					
 					// 결과확인
 					dout.writeInt(p1.getMyCard());// 내카드 정보를 주고
 					dout2.writeInt(p2.getMyCard());
